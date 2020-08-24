@@ -1,0 +1,21 @@
+version: '2'
+services:
+  web:
+    build: .
+    working_dir: /src/biblioteca
+    command: mix phx.server
+    ports:
+      - "4000:4000"
+    volumes:
+      - .:/src
+    depends_on:
+      - postgres
+
+  postgres:
+    build:
+      context: .
+      dockerfile: docker/postgres.DOCKERFILE
+    environment:
+      POSTGRES_MULTIPLE_DATABASES: postgres_dev,postgres_test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres_password
